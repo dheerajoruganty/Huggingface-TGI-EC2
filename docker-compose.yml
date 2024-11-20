@@ -1,0 +1,16 @@
+services:
+  HuggingfaceTGI:
+    container_name: HuggingfaceTGI
+    deploy:
+      restart_policy:
+        condition: on-failure
+    environment:
+      NVIDIA_VISIBLE_DEVICES: 0
+      HF_MODEL_ID: meta-llama/Llama-3.2-11B-Vision-Instruct
+    image: ghcr.io/huggingface/text-generation-inference:2.4.0
+    ports:
+      - "8080:8080"
+    runtime: nvidia
+    shm_size: 12g
+    volumes:
+    - /tmp/hf_token.txt:/tmp/token:ro
